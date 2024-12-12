@@ -26,8 +26,10 @@ export default function RootLayout({
       // Redirect to the promotion URL if the cookie is not set
       router.replace('https://parkapp.ca/zone/65abf5a7cbccb4a384daacbe');
     }else{
-        // Optionally set the cookie if you want this to persist
-        document.cookie = 'scanned=true; path=/; max-age=86400'; // 1 day
+        // Set a cookie that lasts for 10 years
+        const expirationDate = new Date();
+        expirationDate.setFullYear(expirationDate.getFullYear() + 10);
+        document.cookie = `scanned=true; path=/; expires=${expirationDate.toUTCString()}`;
 
     }
   }, [router]);
