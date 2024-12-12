@@ -13,7 +13,7 @@ export default function Page() {
       <header className="flex items-center justify-between p-4 border-b border-[#B71C1C]">
         <div className="h-12 relative w-40">
           <Image
-            src="https://parkapp.ca/cwp_api/uploads/logo/logo-1686162477252.png"
+            src=""
             alt="CANADA-WIDE PARKING"
             fill
             className="object-contain object-left"
