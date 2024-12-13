@@ -1,6 +1,9 @@
 // app/zone/[zoneId]/page.tsx
 'use client';
 
+
+export const runtime = 'edge';
+
 import { useSearchParams } from 'next/navigation';
 import HomePage from "@/app/page";
 import AddPlatePage from "@/app/add-plate/page";
