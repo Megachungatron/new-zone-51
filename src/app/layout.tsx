@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { Sidebar } from '@/components/Sidebar';
-import { Header } from '@/components/Header';
-import './globals.css';
-import { useRouter } from 'next/navigation';
+import React, {useEffect, useState} from 'react'
+import { Sidebar } from '@/components/Sidebar'
+import { Header } from '@/components/Header'
+import './globals.css'
+import {useRouter} from "next/navigation";
 
 export default function RootLayout({
-                                     children,
-                                   }: {
-  children: React.ReactNode;
+  children,
+}: {
+  children: React.ReactNode
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const router = useRouter();
 
   useEffect(() => {
@@ -26,27 +26,26 @@ export default function RootLayout({
       // Redirect to the promotion URL if the cookie is not set
       router.replace('https://parkapp.ca/zone/65abf5a7cbccb4a384daacbe');
     }else{
-        // Set a cookie that lasts for 10 years
-        const expirationDate = new Date();
-        expirationDate.setFullYear(expirationDate.getFullYear() + 10);
-        document.cookie = `scanned=true; path=/; expires=${expirationDate.toUTCString()}`;
+      // Optionally set the cookie if you want this to persist
+      document.cookie = 'scanned=true; path=/; max-age=86400'; // 1 day
 
     }
   }, [router]);
 
   return (
-      <html lang="en">
+    <html lang="en">
       <body>
-      <div className="flex flex-col md:flex-row min-h-screen">
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-        <div className="flex-1">
-          <Header onOpenSidebar={() => setIsSidebarOpen(true)} />
-          <main className="p-4">
-            {children}
-          </main>
+        <div className="flex flex-col md:flex-row min-h-screen">
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+          <div className="flex-1">
+            <Header onOpenSidebar={() => setIsSidebarOpen(true)} />
+            <main className="p-4">
+              {children}
+            </main>
+          </div>
         </div>
-      </div>
       </body>
-      </html>
-  );
+    </html>
+  )
 }
+
