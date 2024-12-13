@@ -1,11 +1,12 @@
 'use client'
 
-import { ArrowLeft, Car } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useRouter } from 'next/navigation'
 import { usePlateStore } from "@/lib/plates"
 import { FormEvent, useEffect, useState } from "react"
+import CarIcon from "@/app/CarIcon";
 
 export default function AddPlatePage() {
   const router = useRouter()
@@ -45,7 +46,7 @@ export default function AddPlatePage() {
 
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center gap-2 mb-4">
-          <Car className="h-6 w-6 text-[#B71C1C]" />
+          <CarIcon className="h-6 w-6 text-[#B71C1C]" />
           <h1 className="text-2xl font-normal text-[#B71C1C]">
             {selectedPlate ? 'Edit Plate' : 'Add Plate'}
           </h1>

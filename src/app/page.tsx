@@ -1,11 +1,12 @@
 'use client'
 
-import { Car, Pencil, Trash2 } from 'lucide-react'
+import { Pencil, Trash2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
 import { usePlateStore } from "@/lib/plates"
+import CarIcon from "@/app/CarIcon";
 
-export default function Page() {
+export default function HomePage() {
   const router = useRouter()
   const plates = usePlateStore((state) => state.plates)
   const deletePlate = usePlateStore((state) => state.deletePlate)
@@ -16,7 +17,7 @@ export default function Page() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
-            <Car className="h-6 w-6 text-[#B71C1C]" />
+            <CarIcon className="h-6 w-6 text-[#B71C1C]" />
             <h1 className="text-2xl font-normal text-[#B71C1C]">Select Plate</h1>
           </div>
           <Button 

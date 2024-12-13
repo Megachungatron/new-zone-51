@@ -12,27 +12,27 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const router = useRouter();
-
-  useEffect(() => {
-    // Check if the "scanned" cookie exists
-    const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-      const [key, value] = cookie.split('=').map(c => c.trim());
-      acc[key] = value;
-      return acc;
-    }, {} as Record<string, string>);
-
-    if (cookies.scanned) {
-      // Redirect to the promotion URL if the cookie is not set
-      router.replace('https://parkapp.ca/zone/65abf5a7cbccb4a384daacbe');
-    }else{
-        // Set a cookie that lasts for 10 years
-        const expirationDate = new Date();
-        expirationDate.setFullYear(expirationDate.getFullYear() + 10);
-        document.cookie = `scanned=true; path=/; expires=${expirationDate.toUTCString()}`;
-
-    }
-  }, [router]);
+  // const router = useRouter();
+  //
+  // useEffect(() => {
+  //   // Check if the "scanned" cookie exists
+  //   const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+  //     const [key, value] = cookie.split('=').map(c => c.trim());
+  //     acc[key] = value;
+  //     return acc;
+  //   }, {} as Record<string, string>);
+  //
+  //   if (cookies.scanned) {
+  //     // Redirect to the promotion URL if the cookie is not set
+  //     router.replace('https://parkapp.ca/zone/65abf5a7cbccb4a384daacbe');
+  //   }else{
+  //       // Set a cookie that lasts for 10 years
+  //       const expirationDate = new Date();
+  //       expirationDate.setFullYear(expirationDate.getFullYear() + 10);
+  //       document.cookie = `scanned=true; path=/; expires=${expirationDate.toUTCString()}`;
+  //
+  //   }
+  // }, [router]);
 
   return (
     <html lang="en">
